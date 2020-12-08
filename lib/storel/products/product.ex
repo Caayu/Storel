@@ -8,6 +8,7 @@ defmodule Storel.Products.Product do
     field :name, :string
     field :price, :decimal
     field :quantity, :integer
+    has_many :order_products, Storel.OrderProducts.OrderProduct
 
     timestamps()
   end

@@ -2,11 +2,15 @@ defmodule Storel.Orders.Order do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Storel.OrderProducts.OrderProduct
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "orders" do
     field :customer_id, :binary_id
-    field :product_id, :binary_id
+
+    belongs_to :customer, Storel.Customers.Customer
+    has_many :order_products, Storel.OrderProducts.OrderProduct
 
     timestamps()
   end
@@ -14,7 +18,9 @@ defmodule Storel.Orders.Order do
   @doc false
   def changeset(order, attrs) do
     order
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:customer_id])
+    |> foreign_key_constraint(:customer_id)
+    |> cast_assoc(:order_products, &OrderProduct.changeset/2)
+    |> validate_required([:customer_id, :order_products])
   end
 end

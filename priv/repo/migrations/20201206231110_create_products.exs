@@ -11,7 +11,7 @@ defmodule Storel.Repo.Migrations.CreateProducts do
       timestamps()
     end
 
-    create(unique_index(:produtcs, [:name]))
+    create(unique_index(:products, [:name]))
 
   end
 end
