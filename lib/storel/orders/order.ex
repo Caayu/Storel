@@ -7,8 +7,6 @@ defmodule Storel.Orders.Order do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "orders" do
-    field :customer_id, :binary_id
-
     belongs_to :customer, Storel.Customers.Customer
     has_many :order_products, Storel.OrderProducts.OrderProduct
 

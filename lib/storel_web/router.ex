@@ -5,8 +5,11 @@ defmodule StorelWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", StorelWeb do
+  scope "/" do
     pipe_through :api
+
+    forward "/graphql", Absinthe.Plug, schema: StorelGraphql.Schema, json_decoc: Jason
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: StorelGraphql.Schema, json_decoc: Jason
   end
 
   # Enables LiveDashboard only for development
